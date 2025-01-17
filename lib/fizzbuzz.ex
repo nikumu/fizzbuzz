@@ -6,12 +6,15 @@ defmodule Fizzbuzz do
   end
 
   defp handle_file_read({:ok, result}) do
-    result
-    |> String.split(",")
-    |> Enum.map(&convert_and_evaluate_numbers/1)
+    result =
+      result
+      |> String.split(",")
+      |> Enum.map(&convert_and_evaluate_numbers/1)
+
+    {:ok, result}
   end
 
-  defp handle_file_read({:error, reason}), do: "Error reading the file: #{reason}"
+  defp handle_file_read({:error, reason}), do: {:error, "Error reading the file: #{reason}"}
 
   defp convert_and_evaluate_numbers(elem) do
     elem
